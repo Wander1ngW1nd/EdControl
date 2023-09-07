@@ -1,0 +1,119 @@
+{% extends "navbar.html" %}
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" href="{% static "css/profile.css" %}">
+    <div class="container" style="padding-top: 5em; padding-left: 12em; padding-right: 12em;">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-img">
+                    <img src="http://placehold.it/300x200" alt="" width="200px" height="400"/>
+                    <div class="file btn btn-lg btn-primary">
+                        Change Photo
+                        <input type="file" name="file"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="profile-head">
+                    <h5>
+                        {{ user.name }}
+                    </h5>
+                    <p>
+                        {{ user.about }}
+                    </p>
+                    <ul class="nav nav-tabs" style="bottom: 0; position: absolute; width: 100%;">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#projects" role="tab" aria-controls="profile" aria-selected="false">Projects</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3 text-right">
+                {% if user.last_seen == "Online" %}
+                    <span class="badge badge-pill badge-success">
+                        {{ user.user_status }}
+                    </span> <br/>
+                {% else %}
+                    <span class="badge badge-pill badge-secondary">
+                        {{ user.user_status }}
+                    </span> <br/>
+                    <small>Last seen: {{ user.last_seen }} ago</small>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-work">
+                    <p>Recent projects</p>
+                </div>
+            </div>
+            <div class="col-md-8 pt-2">
+                <div class="tab-content profile-tab" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Id</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ user.id }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Name</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ user.name }} {{ user.surname }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Email</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ user.email }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>About me</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ user.about }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Joined on</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ user.join_date }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="projects" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Position</label>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Project name</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Owner</label>
+                            </div>
+                            <div class="col-md-6">
+                                <a href="#">Some project</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

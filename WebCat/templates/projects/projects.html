@@ -1,0 +1,46 @@
+{% extends "navbar.html" %}
+{% block content %}
+    <style>
+        .center {
+            text-decoration: none;
+            text-align: center;
+        }
+        div a:hover {
+            text-decoration: none;
+        }
+        div .col-md-4:hover {
+            background: #eeeeee;
+            cursor: pointer;
+        }
+    </style>
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <p class="font-weight-bold text-info">
+                Projects
+            </p>
+        </div>
+        <hr />
+        <div class="row">
+        {% for project in projects %}
+                <div class="col-md-4 {% if not project.number|divisibleby:3 %}border-right{% endif %}" onclick="window.location.href='/projects/?act=view&id={{ project.id }}'">
+                    <p class="text-center font-weight-bold text-primary">
+                        <p class="center font-weight-bold text-primary">
+                            {{ project.name }}
+                        </p>
+                    </p>
+                    <p>
+                        <span class="font-weight-bold">Owner: </span>{{ project.owner }}
+                    </p>
+                    <p>
+                        {{ project.about }}
+                    </p>
+                </div>
+            {% if project.number|divisibleby:3 and project.number|add:1 <= projects|length %}
+                </div>
+                <hr />
+                <div class="row">
+            {% endif %}
+        {% endfor %}
+        </div>
+    </div>
+{% endblock %}

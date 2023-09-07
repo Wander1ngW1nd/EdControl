@@ -1,0 +1,29 @@
+{% extends "navbar.html" %}
+{% load static %}
+{% block content %}
+    {% if user.not_auth == "True" %}
+        <div class="container">
+            <div class="row align-items-center mx-auto">
+                <div class="col px-md-5">
+                    <img src="{% static "img/placeholder1.png" %}" height="700" width="700">
+                </div>
+                <div class="col px-md-5">
+                    <p class="font-weight-bold text-primary">Ideal place for your projects</p>
+                    <a href="/sign_up" class="btn btn-outline-success text-center" role="button" aria-disabled="true">Start work</a>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="container">
+            <div class="row align-items-center mx-auto">
+                <div class="col px-md-5">
+                    <img src="{% static "img/placeholder1.png" %}" height="700" width="700">
+                </div>
+                <div class="col px-md-5">
+                    <p class="font-weight-bold text-primary">Thanks for using our platform</p>
+                    <a href="/projects/?act=new_project" class="btn btn-outline-success text-center" role="button" aria-disabled="true">Create project</a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

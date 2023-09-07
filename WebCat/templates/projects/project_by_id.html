@@ -1,0 +1,25 @@
+{% extends "navbar.html" %}
+{% block content %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <p class="font-weight-bold text-info">
+                Project information
+            </p>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <p><span class="font-weight-bold">Project name:</span> {{ project.name }} </p>
+                <p><span class="font-weight-bold">Project owner:</span> {{ project.owner }} </p>
+                <p><span class="font-weight-bold">Project about:</span> {{ project.about }} </p>
+            </div>
+        </div>
+        {% if project.is_owner == True %}
+            <hr />
+            <div class="row justify-content-center">
+                <button class="btn btn-secondary" onclick="window.location.href='/projects/?act=edit&id={{ project.id }}'">Edit</button>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

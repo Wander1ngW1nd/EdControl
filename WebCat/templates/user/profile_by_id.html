@@ -1,0 +1,123 @@
+{% extends "navbar.html" %}
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" href="{% static "css/profile.css" %}">
+    {% if not_found == 'True' %}
+        <div class="container" style="padding-top: 5em; padding-left: 12em; padding-right: 12em;">
+            <p class="font-weight-bold text-info" style="text-align: center">
+                User not found, meow з:
+            </p>
+        </div>
+    {% else %}
+        <div class="container" style="padding-top: 5em; padding-left: 12em; padding-right: 12em;">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="profile-img">
+                        <img src="https://lh3.googleusercontent.com/proxy/reXsj_vWOWQfaHQ7mvnfjamJRKa1VMCki3b-4gO-nzv6_YJ4FZDg8xoR5E7NV2oBJ-bhQc_54gcIZHBVm40O0XSIS2Ib8zsz7xC8uV2KTeRx53KLP14z1A7ei7KzXtFLaBKKIA" alt=""/>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="profile-head">
+                        <h5>
+                            {{ target.name }}
+                        </h5>
+                        <p>
+                            {{ target.about }}
+                        </p>
+                        <ul class="nav nav-tabs" style="bottom: 0; position: absolute; width: 100%;">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#projects" role="tab" aria-controls="profile" aria-selected="false">Projects</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3 text-right">
+                    {% if target.last_seen == "Online" %}
+                        <span class="badge badge-pill badge-success">
+                            {{ target.user_status }}
+                        </span> <br/>
+                    {% else %}
+                        <span class="badge badge-pill badge-secondary">
+                            {{ target.user_status }}
+                        </span> <br/>
+                        <small>Last seen: {{ target.last_seen }} ago</small>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="profile-work">
+                        <p>Recent projects</p>
+                    </div>
+                </div>
+                <div class="col-md-8 pt-2">
+                    <div class="tab-content profile-tab" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Id</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>{{ target.id }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Name</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>{{ target.name }} {{ target.surname }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Email</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>{{ target.email }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>About me</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>{{ target.about }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Joined on</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>{{ target.join_date }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="projects" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Position</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Project name</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Owner</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="#">Some project</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

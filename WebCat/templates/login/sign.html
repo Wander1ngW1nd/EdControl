@@ -1,0 +1,154 @@
+{% extends "navbar.html" %}
+{% load static %}
+{% block content %}
+    <script src="{% static "js/login_script.js" %}"></script>
+    <div class="container" style="padding-top: 13em; padding-left: 12em; padding-right: 12em;"> <div class="rows h-100 items-align-center"> <p class="col-sm-12">
+        <p class="font-weight-bold text-primary" style="text-align: center">Sing Up</p>
+        <hr>
+        <p class="font-weight-bold text-info" style="text-align: center" id="hint">Step 1 - Account information</p>
+        <br/>
+        <form onsubmit="return isOk();">
+            {% csrf_token %}
+            <div class="form-group row" id="emailDiv">
+                <label for="email" class="col-md-4 col-form-label">Email</label>
+                <div class="col-md-8">
+                    <input type="email" class="form-control" id="email" placeholder="Email" oninput="checkEmail();" onfocus="removeEmailInvalid();">
+                    <div class="invalid-feedback" id="emailTypeError">
+                        Please type a normal email.
+                    </div>
+                    <div class="invalid-feedback" id="existsEmail" hidden>
+                        User with such email already exists.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row" id="loginDiv">
+                <label for="login" aria-describedby="loginHelp" class="col-sm-4 col-form-label">Login</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="login" placeholder="Login" oninput="checkLogin();" disabled onfocus="removeLoginInvalid();">
+                    <div class="invalid-feedback" id="emptyLogin">
+                        Field can't be empty.
+                    </div>
+                    <div class="invalid-feedback" id="existsLogin" hidden>
+                        User with such login already exists.
+                    </div>
+                    <div class="form-check">
+                        <small>
+                            <input class="form-check-input" type="checkbox" id="customLogin" onclick="customLoginCheck();">
+                            <label class="form-check-label" for="customLogin">
+                                Custom login
+                            </label>
+                            <small id="loginHelp" class="form-text font-weight-bold text-muted">
+                                Login can't consist character @.
+                            </small>
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row" id="passwordDiv">
+                <label for="passwordFirst" class="col-sm-4 col-form-label">Password</label>
+                <div class="col-sm-8">
+                    <input type="password" class="form-control" id="passwordFirst" placeholder="Password" onfocus="removePasswordInvalid();" oninput="validatePassConfirm();">
+                    <div class="invalid-feedback">
+                        Password can't be empty.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row" id="passwordConfirmDiv">
+                <label for="passwordConfirm" class="col-sm-4 col-form-label">Password confirmation</label>
+                <div class="col-sm-8">
+                    <input type="password" class="form-control" id="passwordConfirm" placeholder="Password" onfocus="removePasswordConfirmInvalid();" oninput="validatePassConfirm();">
+                    <div class="invalid-feedback" id="passwordConfEmpty">
+                        Field can't be empty.
+                    </div>
+                    <div class="invalid-feedback" id="notSamePasswords" hidden>
+                        Both passwords must be same.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row" id="nameDiv" hidden>
+                <label for="name" class="col-sm-4 col-form-label">Name</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="name" placeholder="Name" onfocus="removeNameInvalid();">
+                    <div class="invalid-feedback">
+                        Field can't be empty.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row" id="surNameDiv" hidden>
+                <label for="surname" class="col-sm-4 col-form-label">Surname</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="surname" placeholder="Surname" onfocus="removeSurNameInvalid();">
+                    <div class="invalid-feedback">
+                        Field can't be empty.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row" id="organizationDiv" hidden>
+                <label for="organization" class="col-sm-4 col-form-label">Organization</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="organization" placeholder="Organization" onfocus="removeOrganizationInvalid();">
+                    <div class="invalid-feedback">
+                        Field can't be empty.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row" id="aboutDiv" hidden>
+                <label for="about" class="col-sm-4 col-form-label">About me</label>
+                <div class="col-sm-8">
+                    <textarea class="form-control" id="about" placeholder="About me" onfocus="removeAboutInvalid();"></textarea>
+                    <div class="invalid-feedback">
+                        Field can't be empty.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row" id="emailTokenDiv" hidden>
+                <label for="emailToken" class="col-sm-4 col-form-label">Email token</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="emailToken" placeholder="Email token" aria-describedby="emailTokenHelp" onfocus="removeTokenInvalid();">
+                    <small id="emailTokenHelp" class="form-text text-muted">
+                        We sent it to your email.
+                    </small>
+                    <div class="invalid-feedback">
+                        Invalid token.
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <hr id="hrDiv">
+            <p class="font-weight-bold" style="text-align: center" id="specDiv">Special agreements</p>
+            <div class="form-group row" id="yearDiv">
+                <div class="col-sm-10">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="year" onfocus="removeYearInvalid();">
+                        <label class="form-check-label" for="gridCheck1">
+                            I'm 18 years old
+                        </label>
+                        <div class="invalid-feedback">
+                            You must be 18 year old.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row float-right mx-1" id="continue">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary" onclick="continueReg();">Continue</button>
+                </div>
+            </div>
+            <div class="form-group row float-right mx-1" id="finish" hidden>
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-success" onclick="setOk();">Finish</button>
+                </div>
+            </div>
+            <div class="form-group row float-right" id="back" hidden>
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary" onclick="backReg();">Back</button>
+                </div>
+            </div>
+            <div class="form-group row text-center" id="signin" hidden>
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-success"  data-bs-toggle="modal" data-bs-target="#signIn">Sign in</button>
+                </div>
+            </div>
+        </form>
+    </div></div></div>
+{% endblock %}

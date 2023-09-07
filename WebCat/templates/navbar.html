@@ -1,0 +1,79 @@
+{% extends "wrapper.html" %}
+{% load static %}
+{% block navbar %}
+    <link rel="stylesheet" href="{% static "css/nav_fix.css"%}">
+    <script src="{% static "js/script.js" %}"></script>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-altgray">
+        <div class="container">
+
+            <a class="navbar-brand font-weight-bold " href="/">
+                <img src="{% static "img/logo.png" %}" alt="logo" class="d-inline-block align-top" width="40" height="40">
+                WebCat
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                {% if user.not_auth == "True" %}
+                    <div class="nav-item">
+                        <button type="button" class="btn btn-outline-primary position-relative" data-bs-toggle="modal" data-bs-target="#signIn">Sign in</button> 
+                        <a href="/sign_up" class="btn btn-outline-primary position-relative" role="button" aria-disabled="true">Sign up</a>
+                    </div>
+                {% else %}
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/projects/">Projects</a>
+                    </li>
+                </ul>
+                    <div class="nav-item dropdown">
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ user.name }}
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li><a class="dropdown-item" href="/profile/">Profile</a><li>
+                                <li><a class="dropdown-item" href="/projects?act=new_project">Create project</a><li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item btn btn-danger active" onclick="logOut();">Sign out</a><li>
+                                </ul>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="modal fade" id="signIn" tabindex="-1" role="dialog" aria-labelledby="Sign In" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-altgray">
+                <div class="modal-header">
+                    <h1 class="modal-title" id="exampleModalLongTitle">Sign in</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть">
+                    <span aria-hidden="true">&times;</span>
+                    {% comment %} </button> {% endcomment %}
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Login or email:</label>
+                                <input type="text" class="form-control" id="authEmail">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Password:</label>
+                                <input type="password" class="form-control" id="authPassword">
+                            </div>
+                        </form>
+                        <small class="text-danger" id="authError" hidden>
+                            Login, email or password are wrong.
+                        </small>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="authorize();">Sing in</button>
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='/sign_up';">Sing up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
