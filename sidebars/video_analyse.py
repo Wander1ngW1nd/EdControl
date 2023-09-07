@@ -4,11 +4,29 @@ Created on Tue Sep  5 23:45:21 2023
 
 @author: M
 """
+import cv2
 import streamlit as st
 import time
 import os
 
 from plotlycharts import charts
+
+
+VIDEO_PATH = "C:\\Users\\ПК\\Videos"
+
+EMOTIONS_RU = {"angry":"Злость", "disgust":"Отвращение", "fear":"Страх",
+            "happy":"Счастье", "sad":"Грусть", "surprise":"Удивление"}
+
+def count_video_length(path, name):
+    
+    path_to_video = os.path.join(path, name)
+    cap = cv2.VideoCapture(path_to_video)
+    fps = cap.get(cv2.CAP_PROP_FPS) 
+    frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    duration = frame_count/fps
+    length = duration / 60  # duration in minutes
+    
+    return length
 
 #функция для отображения экспандеров до загрузки видео, аргумент - колонка, в которой все отображается
 def default_expanders(teacher):
@@ -29,13 +47,21 @@ def add_expander(teacher, video):
         info, timeStamps = st.columns([4, 6])
 
    #video read
-        #video_file = open('C\\ путь \\имя файла.mp4', 'rb')
-        #video_bytes = video_file.read()
-        info.write("videoplayer")
-        #info.video(video_bytes)
+        video_file = open(VIDEO_PATH +"\\"+ video.name, 'rb')
+        video_bytes = video_file.read()
+        #info.write("videoplayer")
+        info.video(video_bytes)
 
-        timeStamps.text("График с времеными отметками ⬇")
+        timeStamps.text("Вреременные отметки ⬇")
+        #data = метод_модели()
+        
+        data = [{"время": "5:10", "Эмоция":"Удивление", "Score":0.4},
+                {"время": "8:09", "Эмоция":"Грусть", "Score":0.6},
+                {"время": "11:14", "Эмоция":"Счастье", "Score":0.34}]
+        
+        timeStamps.data_editor(data, disabled = True)
 
+        
         #selectbox выбора типа графика
         option = info.selectbox(
             'Форма представления',
@@ -72,22 +98,27 @@ def view_side_bar(name, teacher):
     #upload файла
     videoFile = teacher.file_uploader("Загрузить видео", type='mp4',\
                                       accept_multiple_files=False)
-
+    
+    
     #если видео загружено, сохраняем и отрисовываем больше экспандеров
     if videoFile is not None:
         #скачивание файла в дирректорию
-        with open(os.path.join("директория", videoFile.name),"wb") as f:
+        with open(os.path.join(VIDEO_PATH, videoFile.name),"wb") as f:
             f.write(videoFile.getbuffer())
-
-        with teacher.status("Обработка"):
-            time.sleep(3)
-        teacher.header("Выбор видео")
-
-        add_expander(teacher, videoFile)
-
+        videoLength = count_video_length(VIDEO_PATH, videoFile.name)
+        if videoLength <=20 and videoLength >= 0.01:
+            with teacher.status("Обработка"):
+                time.sleep(3)
+                
+            teacher.header("Выбор видео")
+            add_expander(teacher, videoFile)
+        else:
+            teacher.error("Длинное видео")
+            teacher.header("Выбор видео")
+            default_expanders(teacher)
     #иначе отрисовываем дефолтное кол-во экспандеров
     else:
-
+        
         teacher.header("Выбор видео")
 
         default_expanders(teacher)
