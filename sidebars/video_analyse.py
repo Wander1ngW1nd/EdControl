@@ -65,13 +65,15 @@ def add_expander(teacher, video):
         #selectbox выбора типа графика
         option = info.selectbox(
             'Форма представления',
-                ('Пятиугольник', 'Piechart'))
+                ('Пятиугольник', 'Bar chart'))
 
         if option == 'Пятиугольник':
             radio = charts.radio_chart()
             info.plotly_chart(radio, use_container_width=True)
             st.write("...")
-        elif option == 'Piechart':
+        elif option == 'Bar chart':
+            bar = charts.bar_chart()
+            info.plotly_chart(bar, use_container_width=True)
             st.write("...")
 
 
