@@ -10,7 +10,7 @@ import polars as pl
 from attrs import define, field
 from deepface import DeepFace
 
-_SIGNIFICANT_PERIOD_LENGTH_IN_SECONDS: float = 5
+_SIGNIFICANT_EMOTION_PERIOD_LENGTH_IN_SECONDS: float = 5
 
 
 class VideoInputException(IOError):
@@ -57,9 +57,13 @@ class VideoEmotionRecognizer:
             .sort("probability", descending=True)
         )
 
-        # normalize probabilities
-        emotions_summary = emotions_summary.with_columns(
-            (pl.col("probability") / pl.sum("probability")).alias("probability")
+        # normalize probabilities and keep only negative emotions
+        emotions_summary = (
+            emotions_summary
+            .with_columns(
+                (pl.col("probability") / pl.sum("probability")).alias("probability")
+            )
+            .filter(pl.col("emotion") != "neutral")
         )
 
         # return emotion probabilities in form of dict {emotion: probability}
@@ -103,7 +107,7 @@ class VideoEmotionRecognizer:
                 (pl.col("emotion_finish_timestamp") - pl.col("emotion_start_timestamp")).alias("duration")
             )
             .filter(pl.col("emotion") != "neutral")
-            .filter(pl.col("duration") > _SIGNIFICANT_PERIOD_LENGTH_IN_SECONDS)
+            .filter(pl.col("duration") > _SIGNIFICANT_EMOTION_PERIOD_LENGTH_IN_SECONDS)
         )
 
         # return timestamps of significant negative emotions periods in form of dict {emotion: start_timestamp}
