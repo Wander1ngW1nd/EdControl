@@ -10,6 +10,7 @@ import os
 
 from sidebars import video_analyse
 
+
 VIDEO_PATH = ".//Documents//GitHub//EdControl//Videos"
 
 def main():
@@ -43,7 +44,8 @@ def main():
             st.session_state.sidebars = 1
 
         if st.session_state.sidebars == 0:
-            column2.header("EdControl")
+            #column2.header("EdControl") 
+            video_analyse.draw_readme(column2)
         elif st.session_state.sidebars == 1:
             if not os.path.exists(VIDEO_PATH):
                 os.mkdir(VIDEO_PATH)

@@ -5,6 +5,7 @@ Created on Tue Sep  5 23:45:21 2023
 @author: M
 """
 import cv2
+import glob
 import streamlit as st
 import time
 import os
@@ -18,6 +19,20 @@ from plotlycharts import charts
 
 EMOTIONS_RU = {"angry":"Злость", "disgust":"Отвращение", "fear":"Страх",
             "happy":"Счастье", "sad":"Грусть", "surprise":"Удивление"}
+
+def draw_readme(column):
+    with open(".//Documents//GitHub//EdControl//README.md", 'r') as f:
+        readme_line = f.readlines()
+        buffer = []
+        resourses = [os.path.basename(x) for x in glob.glob(f'img/*')]
+    for line in readme_line:
+        buffer.append(line)
+        for image in resourses:
+            if image in line:
+                column.markdown(''.join(buffer[:-1])) 
+                column.image(f'img/{image}')
+                buffer.clear()
+    column.markdown(''.join(buffer))
 
 def seconds_to_time(seconds):
     
