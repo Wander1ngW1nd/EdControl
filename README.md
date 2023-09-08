@@ -32,4 +32,17 @@ The appearance of the service is intuitive for users and its main page looks lik
 После успешной обработки загруженного видео вы можете получить аналитику и рекомендации:
 
 After successfully processing the uploaded video, you can get analytics and recommendations:
-<p align="center"><img src="/img/1.png" width=90% alt="Main page"></p>
+<p align="center"><img src="/img/1.png" width=90% alt="Uploaded page"></p>
+
+## Road Map
+На данный момент продукт находится в рабочем состоянии и готов к использованию. Наша команда EdControl видит перспективы и дальнейший путь развития продукта, добавление новых функций и расширение целевой аудитории.
+
+- Добавление распознавания речи и интонации для повышения точности распознования эмоционального состояния
+- Добавление распознования жестов
+- Добавление распознования эмоционального состояния в групповых звонках и конференциях
+
+At the moment, the product is in working condition and ready for use. Our EdControl team sees prospects and the further path of product development, the addition of new features and the expansion of the target audience.
+
+- Adding speech recognition and intonation to improve the accuracy of emotional state recognition
+- Adding gesture recognition
+- Adding emotional state recognition in group calls and conferences
