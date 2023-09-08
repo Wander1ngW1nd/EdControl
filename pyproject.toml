@@ -13,7 +13,8 @@ numpy = "^1.25.2"
 deepface = "^0.0.79"
 polars = "^0.19.2"
 attrs = "^23.1.0"
-
+plotly = "5.16.1"
+pandas = "2.1.0"
 
 [tool.poetry.group.linters.dependencies]
 black = "^23.7.0"
