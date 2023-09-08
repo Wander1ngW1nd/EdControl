@@ -12,7 +12,9 @@ import os
 from plotlycharts import charts
 
 
-VIDEO_PATH = "C:\\Users\\ПК\\Videos"
+#VIDEO_PATH = "C:\\Users\\ПК\\Videos"
+
+
 
 EMOTIONS_RU = {"angry":"Злость", "disgust":"Отвращение", "fear":"Страх",
             "happy":"Счастье", "sad":"Грусть", "surprise":"Удивление"}
@@ -50,7 +52,7 @@ def default_expanders(teacher):
         st.write("...")
 
 #функция для отображения экспандеров после загрузки видео, аргументы-колонка и видеофайл
-def add_expander(teacher, video):
+def add_expander(teacher, video, path):
 
 
     with teacher.expander(":green[загруженное видео]"):
@@ -58,7 +60,7 @@ def add_expander(teacher, video):
         info, timeStamps = st.columns([4, 6])
 
    #video read
-        video_file = open(VIDEO_PATH +"\\"+ video.name, 'rb')
+        video_file = open(path +"\\"+ video.name, 'rb')
         video_bytes = video_file.read()
         #info.write("videoplayer")
         info.video(video_bytes)
@@ -97,7 +99,7 @@ def add_expander(teacher, video):
         st.write("...")
 
 #view, отображаемая по нажатию на препода
-def view_side_bar(name, teacher):
+def view_side_bar(name, teacher, path):
     teacher.header("📸"+name)
 
     rating, info = teacher.columns([3,5])
@@ -115,16 +117,18 @@ def view_side_bar(name, teacher):
     
     #если видео загружено, сохраняем и отрисовываем больше экспандеров
     if videoFile is not None:
+        
+
         #скачивание файла в дирректорию
-        with open(os.path.join(VIDEO_PATH, videoFile.name),"wb") as f:
+        with open(os.path.join(path, videoFile.name),"wb") as f:
             f.write(videoFile.getbuffer())
-        videoLength = count_video_length(VIDEO_PATH, videoFile.name)
-        if videoLength <=20 and videoLength >= 0.01:
+        videoLength = count_video_length(path, videoFile.name)
+        if videoLength <=17 and videoLength >= 0.01:
             with teacher.status("Обработка"):
                 time.sleep(3)
                 
             teacher.header("Выбор видео")
-            add_expander(teacher, videoFile)
+            add_expander(teacher, videoFile, path)
         else:
             teacher.error("Длинное видео")
             teacher.header("Выбор видео")
