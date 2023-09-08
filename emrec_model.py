@@ -9,6 +9,7 @@ import numpy as np
 import polars as pl
 from attrs import define, field
 from deepface import DeepFace
+from tqdm import tqdm
 
 _SIGNIFICANT_EMOTION_PERIOD_LENGTH_IN_SECONDS: float = 5
 
@@ -23,7 +24,9 @@ class VideoEmotionRecognizer:
     _analyzed_frames: pl.DataFrame = field(init=False)
 
     def __attrs_post_init__(self):
+        print("Start processing video...")
         self._analyzed_frames = self._analyze()
+        print("Video processed")
 
     def _analyze(self) -> pl.DataFrame:
         # open video file
@@ -33,19 +36,24 @@ class VideoEmotionRecognizer:
 
         # collect timestamps and emotion probabilities for every frame
         analyzed_frames_data: dict = {"timestamp": [], "emotion": [], "probability": []}
-        while cap.isOpened():
-            return_flag: bool
-            frame: np.ndarray
-            return_flag, frame = cap.read()
-            if return_flag:
-                result = DeepFace.analyze(frame, actions="emotion", enforce_detection=False, silent=True)[0]
-                analyzed_frames_data["timestamp"] += [cap.get(cv2.CAP_PROP_POS_MSEC) / 1000] * len(
-                    result["emotion"].keys()
-                )
-                analyzed_frames_data["emotion"] += list(map(str, result["emotion"].keys()))
-                analyzed_frames_data["probability"] += list(map(float, result["emotion"].values()))
-            else:
-                raise VideoInputException("No video frame returned")
+        total_frame_count: int = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+        with tqdm(total=100, bar_format="{desc}: {percentage:.3f}% | {elapsed} < {remaining}") as pbar:
+            while cap.isOpened():
+                return_flag: bool
+                frame: np.ndarray
+                return_flag, frame = cap.read()
+                if return_flag:
+                    result = DeepFace.analyze(frame, actions="emotion", enforce_detection=False, silent=True)[0]
+                    analyzed_frames_data["timestamp"] += [cap.get(cv2.CAP_PROP_POS_MSEC) / 1000] * len(
+                        result["emotion"].keys()
+                    )
+                    analyzed_frames_data["emotion"] += list(map(str, result["emotion"].keys()))
+                    analyzed_frames_data["probability"] += list(map(float, result["emotion"].values()))
+                else:
+                    raise VideoInputException("No video frame returned")
+
+                pbar_update_value = 100 / total_frame_count
+                pbar.update(pbar_update_value)
 
         return pl.DataFrame(analyzed_frames_data)
 
@@ -58,13 +66,9 @@ class VideoEmotionRecognizer:
         )
 
         # normalize probabilities and keep only negative emotions
-        emotions_summary = (
-            emotions_summary
-            .with_columns(
-                (pl.col("probability") / pl.sum("probability")).alias("probability")
-            )
-            .filter(pl.col("emotion") != "neutral")
-        )
+        emotions_summary = emotions_summary.with_columns(
+            (pl.col("probability") / pl.sum("probability")).alias("probability")
+        ).filter(pl.col("emotion") != "neutral")
 
         # return emotion probabilities in form of dict {emotion: probability}
         output: dict = dict(
@@ -85,7 +89,7 @@ class VideoEmotionRecognizer:
             .sort(by="timestamp", descending=False)
         )
 
-        # get duration of every consecutive emotion repetition 
+        # get duration of every consecutive emotion repetition
         emotions_timestamps = emotions_timestamps.with_columns(
             (pl.col("emotion") != pl.col("emotion").shift_and_fill(pl.col("emotion").backward_fill(), periods=1))
             .cumsum()
@@ -100,7 +104,7 @@ class VideoEmotionRecognizer:
             .drop("emotion_group")
             .sort(by="emotion_start_timestamp", descending=False)
         )
-        
+
         # keep only significant negative emotions periods
         emotions_timestamps = (
             emotions_timestamps.with_columns(
