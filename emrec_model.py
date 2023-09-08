@@ -26,10 +26,12 @@ class VideoEmotionRecognizer:
         self._analyzed_frames = self._analyze()
 
     def _analyze(self) -> pl.DataFrame:
+        # open video file
         cap: cv2.VideoCapture = cv2.VideoCapture(self.filepath)
         if cap.isOpened() == False:
             raise VideoInputException("Video opening error")
 
+        # collect timestamps and emotion probabilities for every frame
         analyzed_frames_data: dict = {"timestamp": [], "emotion": [], "probability": []}
         while cap.isOpened():
             return_flag: bool
@@ -48,16 +50,19 @@ class VideoEmotionRecognizer:
         return pl.DataFrame(analyzed_frames_data)
 
     def emotions_summary(self) -> dict:
+        # sum probabilities of every emotion by frames
         emotions_summary: pl.DataFrame = (
             self._analyzed_frames.groupby("emotion")
             .agg(pl.col("probability").sum())
             .sort("probability", descending=True)
         )
 
+        # normalize probabilities
         emotions_summary = emotions_summary.with_columns(
             (pl.col("probability") / pl.sum("probability")).alias("probability")
         )
 
+        # return emotion probabilities in form of dict {emotion: probability}
         output: dict = dict(
             zip(
                 emotions_summary["emotion"].to_list(),
@@ -68,6 +73,7 @@ class VideoEmotionRecognizer:
         return output
 
     def emotions_timestamps(self) -> dict:
+        # keep only most probable emotion in every frame
         emotions_timestamps: pl.DataFrame = (
             self._analyzed_frames.sort("probability", descending=True)
             .groupby("timestamp")
@@ -75,6 +81,7 @@ class VideoEmotionRecognizer:
             .sort(by="timestamp", descending=False)
         )
 
+        # get duration of every consecutive emotion repetition 
         emotions_timestamps = emotions_timestamps.with_columns(
             (pl.col("emotion") != pl.col("emotion").shift_and_fill(pl.col("emotion").backward_fill(), periods=1))
             .cumsum()
@@ -89,7 +96,8 @@ class VideoEmotionRecognizer:
             .drop("emotion_group")
             .sort(by="emotion_start_timestamp", descending=False)
         )
-
+        
+        # keep only significant negative emotions periods
         emotions_timestamps = (
             emotions_timestamps.with_columns(
                 (pl.col("emotion_finish_timestamp") - pl.col("emotion_start_timestamp")).alias("duration")
@@ -98,6 +106,7 @@ class VideoEmotionRecognizer:
             .filter(pl.col("duration") > _SIGNIFICANT_PERIOD_LENGTH_IN_SECONDS)
         )
 
+        # return timestamps of significant negative emotions periods in form of dict {emotion: start_timestamp}
         output: dict = dict(
             zip(
                 emotions_timestamps["emotion"].to_list(),
