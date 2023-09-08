@@ -19,8 +19,8 @@ Our product offers a solution to this problem of education assessment, helping o
 - Рекомендации преподавателю для проведения последующих уроков, при обнаружении каких-либо проблем
 
 Модель с помощью CV определяет эмоцию, которую испытывает человек в данный момент времени:
-<p align="center"><img src="img/girl.png" alt="girl" width=90%>
-<p align="center"><img src="img/boy.png" alt="boy" width=90%>
+<p align="center"><img src="img/girl.png" alt="girl" width=40%>
+<p align="center"><img src="img/boy.png" alt="boy" width=40%>
 
 Currently implemented:
 - Emotional assessment of a person's condition
