@@ -18,14 +18,17 @@ Our product offers a solution to this problem of education assessment, helping o
 - Аналитика и визуализация данных для удобного анализа видео-урока
 - Рекомендации преподавателю для проведения последующих уроков, при обнаружении каких-либо проблем
 
-Модель с помощью CV определяет эмоцию, которую испытывает человек в данный момент времени:
-<p align="center"><img src="img/girl.png" alt="girl" width=40%>
-<img src="img/boy.png" alt="boy" width=40%>
+Модель с помощью CV определяет эмоцию, которую испытывает человек в данный момент времени и отображает глубину эмоции в шкале от 0 до 100:
 
 Currently implemented:
 - Emotional assessment of a person's condition
 - Data analytics and visualization for convenient video lesson analysis
 - Recommendations to the teacher for subsequent lessons, if any problems are found
+
+The CV model determines the emotion that a person is experiencing at a given time and displays the depth of emotion on a scale from 0 to 100:
+
+<p align="center"><img src="img/girl.png" alt="girl" width=40%>
+<img src="img/boy.png" alt="boy" width=40%>
 
 
 
