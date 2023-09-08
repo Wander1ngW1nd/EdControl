@@ -14,14 +14,15 @@ Our product offers a solution to this problem of education assessment, helping o
 
 ## Реализация
 На данный момент реализованы:
-    - Эмоциональное оценка состояния человека
-    - Аналитика и визуализация данных для удобного анализа видео-урока
-    - Рекомендации преподавателю для проведения последующих уроков, при обнаружении каких-либо проблем
+- Эмоциональное оценка состояния человека
+- Аналитика и визуализация данных для удобного анализа видео-урока
+- Рекомендации преподавателю для проведения последующих уроков, при обнаружении каких-либо проблем
 
 Currently implemented:
-    - Emotional assessment of a person's condition
-    - Data analytics and visualization for convenient video lesson analysis
-    - Recommendations to the teacher for subsequent lessons, if any problems are found
+- Emotional assessment of a person's condition
+- Data analytics and visualization for convenient video lesson analysis
+- Recommendations to the teacher for subsequent lessons, if any problems are found
 
 ## Внешний вид сервиса
-
+Внешний вид сервиса интуитивно понятен для пользователей и его главная страница выглядит так:
+<p align="center"><img src="/img/1.jpg" width="300" alt="Detected anger"></p>
