@@ -43,6 +43,79 @@ The appearance of the service is intuitive for users and its main page looks lik
 After successfully processing the uploaded video, you can get analytics and recommendations:
 <p align="center"><img src="/img/1.png" width=90% alt="Uploaded page"></p>
 
+## Installation
+
+1\. Install [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and [docker engine](https://docs.docker.com/engine/install/)
+
+2\. Clone the project:
+
+```bash
+git clone https://github.com/Wander1ngW1nd/EdControl
+```
+
+3\. Build an image:
+
+```bash
+docker build -t edcontrol_image EdControl
+```
+
+4\. Run application container:
+
+```bash
+docker run --name edcontrol_app -dp 8501 edcontrol_image
+```
+
+5\. Figure out which port was assigned to your application:
+
+```bash
+docker port edcontrol_app
+```
+&nbsp; &nbsp; You will see the similar output:
+
+```
+8501/tcp -> 0.0.0.0:<your_port_number>
+```
+
+6\. Go to:
+```
+http://0.0.0.0:<your_port_number>
+```
+
+Now you can use the app!
+
+
+## Development
+
+### Dependencies Management
+
+Project’s dependencies are managed by [poetry](https://python-poetry.org/). So, all the dependencies and configuration parameters are listed in [pyproject.toml](pyproject.toml). 
+
+To install the dependencies, follow these steps:
+
+1\. Install [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and [poetry](https://python-poetry.org/docs/#installation)
+
+2\. Clone the project and go to the corresponding directory: 
+
+```bash
+git clone https://github.com/Wander1ngW1nd/EdControl
+cd EdControl
+```
+
+3\. (Optional) If your python version does not match the requirements specified in [pyproject.toml](pyproject.toml), [install one of the matching versions](https://realpython.com/installing-python)
+
+4\. Create virtual environment and activate it
+
+```bash
+poetry shell
+```
+
+5\. Install dependencies
+
+```bash
+poetry lock --no-update
+poetry install
+```
+
 ## Road Map
 На данный момент продукт находится в рабочем состоянии и готов к использованию. Наша команда EdControl видит перспективы и дальнейший путь развития продукта, добавление новых функций и расширение целевой аудитории.
 
