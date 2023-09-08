@@ -6,7 +6,33 @@ authors = []
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = ">=3.10,<3.12"
+python = ">=3.10,<3.11"
+tensorflow = "^2.14.0rc1"
+opencv-python = "^4.8.0.76"
+numpy = "^1.25.2"
+deepface = "^0.0.79"
+polars = "^0.19.2"
+attrs = "^23.1.0"
+plotly = "5.16.1"
+pandas = "2.1.0"
+tqdm = "^4.66.1"
+streamlit = "^1.25.0"
+
+[tool.poetry.group.linters.dependencies]
+black = "^23.7.0"
+isort = "^5.12.0"
+mypy = "^1.5.1"
+
+[tool.black]
+line-length = 120
+
+
+[tool.isort]
+line_length = 120
+
+
+[tool.mypy]
+ignore_missing_imports = true
 
 
 [build-system]
