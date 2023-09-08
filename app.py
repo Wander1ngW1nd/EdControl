@@ -13,7 +13,7 @@ from sidebars import video_analyse
 def main():
 
     st.set_page_config(
-        page_title="EdTech",
+        page_title="EdConrol",
         page_icon="👁‍🗨",
         layout="wide",
         initial_sidebar_state="expanded",
@@ -41,7 +41,7 @@ def main():
             st.session_state.sidebars = 1
 
         if st.session_state.sidebars == 0:
-            column2.header("MVP")
+            column2.header("EdControl")
         elif st.session_state.sidebars == 1:
             video_analyse.view_side_bar("Преподаватель 1", column2)
 
