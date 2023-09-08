@@ -84,23 +84,23 @@ def add_expander(teacher, video, path):
         timeStamps.text("Вреременные отметки ⬇")
         #data = метод_модели()
         
-        data = [{"время": "5:10", "Эмоция":"Удивление", "Score":0.4},
-                {"время": "8:09", "Эмоция":"Грусть", "Score":0.6},
-                {"время": "11:14", "Эмоция":"Счастье", "Score":0.34}]
+        data = [{"время": "5:10", "Эмоция":"Удивление"},
+                {"время": "8:09", "Эмоция":"Грусть"},
+                {"время": "11:14", "Эмоция":"Счастье"}]
         
         timeStamps.data_editor(data, disabled = True)
 
         
         #selectbox выбора типа графика
         option = info.selectbox(
-            'Форма представления',
-                ('Пятиугольник', 'Bar chart'))
+            'Диаграммы:',
+                ('Полярная', 'Столбчатая'))
 
-        if option == 'Пятиугольник':
+        if option == 'Полярная':
             radio = charts.radio_chart()
             info.plotly_chart(radio, use_container_width=True)
             st.write("...")
-        elif option == 'Bar chart':
+        elif option == 'Столбчатая':
             bar = charts.bar_chart()
             info.plotly_chart(bar, use_container_width=True)
             st.write("...")

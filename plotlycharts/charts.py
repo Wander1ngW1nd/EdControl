@@ -30,9 +30,9 @@ def radio_chart():
 def bar_chart():
     
     df = pd.DataFrame(dict(
-        x=[1, 5, 2, 2, 3, 2],
-        y=['processing cost','mechanical properties','chemical stability',
-           'thermal stability', 'device integration','add emotion']))
+        x = [1, 5, 2, 2, 3, 2],
+        y = ["Злость", "Отвращение","Страх",\
+                 "Счастье","Грусть","Удивление"]))
     fig = px.bar(df, x = "x", y ='y', barmode = 'group', labels={'x': '', 'y':''}, width=500, height=300)
     #fig.update_layout(showlegend=False)
     fig.update_traces(marker_color = ['#f5800d','#f2ce4d','#047e79','#a69565','#cfc1af','#574c31'], marker_line_color = 'black',
