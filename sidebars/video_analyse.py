@@ -136,7 +136,7 @@ def view_side_bar(name, teacher, path):
         with open(os.path.join(path, videoFile.name),"wb") as f:
             f.write(videoFile.getbuffer())
         videoLength = count_video_length(path, videoFile.name)
-        if videoLength <=5 and videoLength >= 0.01:
+        if videoLength <=3 and videoLength >= 0.01:
             with teacher.status("Обработка"):
                 model = EM.VideoEmotionRecognizer(os.path.join(path, videoFile.name))
                 outputSummary = model.emotions_summary()
