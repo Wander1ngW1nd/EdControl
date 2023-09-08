@@ -18,10 +18,16 @@ Our product offers a solution to this problem of education assessment, helping o
 - Аналитика и визуализация данных для удобного анализа видео-урока
 - Рекомендации преподавателю для проведения последующих уроков, при обнаружении каких-либо проблем
 
+Модель с помощью CV определяет эмоцию, которую испытывает человек в данный момент времени:
+<img src="ima/girl.png" alt="girl" width="120" height="120">
+<img src="images/boy.png" alt="boy" width="120" height="120">
+
 Currently implemented:
 - Emotional assessment of a person's condition
 - Data analytics and visualization for convenient video lesson analysis
 - Recommendations to the teacher for subsequent lessons, if any problems are found
+
+
 
 ## Внешний вид сервиса
 Внешний вид сервиса интуитивно понятен для пользователей и его главная страница выглядит так:
