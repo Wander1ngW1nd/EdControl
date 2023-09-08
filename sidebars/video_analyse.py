@@ -15,22 +15,23 @@ from plotlycharts import charts
 
 #VIDEO_PATH = "C:\\Users\\ПК\\Videos"
 
-
+README_IMG_FOLDER = ".//Documents//GitHub//EdControl//img"
+README_FILE_PATH = './/Documents//GitHub//EdControl//Readme_for_main_page.txt'
 
 EMOTIONS_RU = {"angry":"Злость", "disgust":"Отвращение", "fear":"Страх",
             "happy":"Счастье", "sad":"Грусть", "surprise":"Удивление"}
 
 def draw_readme(column):
-    with open(".//Documents//GitHub//EdControl//README.md", 'r') as f:
+    with open(README_FILE_PATH, 'r') as f:
         readme_line = f.readlines()
         buffer = []
-        resourses = [os.path.basename(x) for x in glob.glob(f'img/*')]
+        resourses = [os.path.basename(x) for x in glob.glob(README_IMG_FOLDER + "//*")]
     for line in readme_line:
         buffer.append(line)
-        for image in resourses:
-            if image in line:
+        for imgFolder in resourses:
+            if imgFolder in line:
                 column.markdown(''.join(buffer[:-1])) 
-                column.image(f'img/{image}')
+                column.image(README_IMG_FOLDER + f'//{imgFolder}', use_column_width = True)
                 buffer.clear()
     column.markdown(''.join(buffer))
 
