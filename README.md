@@ -25,4 +25,4 @@ Currently implemented:
 
 ## Внешний вид сервиса
 Внешний вид сервиса интуитивно понятен для пользователей и его главная страница выглядит так:
-<p align="center"><img src="/img/1.png" width=40% alt="Main page"></p>
+<p align="center"><img src="/img/1.png" width=90% alt="Main page"></p>
