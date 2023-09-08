@@ -42,15 +42,15 @@ class VideoEmotionRecognizer:
                 return_flag: bool
                 frame: np.ndarray
                 return_flag, frame = cap.read()
-                if return_flag:
-                    result = DeepFace.analyze(frame, actions="emotion", enforce_detection=False, silent=True)[0]
-                    analyzed_frames_data["timestamp"] += [cap.get(cv2.CAP_PROP_POS_MSEC) / 1000] * len(
-                        result["emotion"].keys()
-                    )
-                    analyzed_frames_data["emotion"] += list(map(str, result["emotion"].keys()))
-                    analyzed_frames_data["probability"] += list(map(float, result["emotion"].values()))
-                else:
-                    raise VideoInputException("No video frame returned")
+                if not return_flag:
+                    break
+                
+                result = DeepFace.analyze(frame, actions="emotion", enforce_detection=False, silent=True)[0]
+                analyzed_frames_data["timestamp"] += [cap.get(cv2.CAP_PROP_POS_MSEC) / 1000] * len(
+                    result["emotion"].keys()
+                )
+                analyzed_frames_data["emotion"] += list(map(str, result["emotion"].keys()))
+                analyzed_frames_data["probability"] += list(map(float, result["emotion"].values()))
 
                 pbar_update_value = 100 / total_frame_count
                 pbar.update(pbar_update_value)
