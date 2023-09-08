@@ -6,9 +6,11 @@ Created on Tue Sep  5 23:28:00 2023
 """
 
 import streamlit as st
+import os
 
 from sidebars import video_analyse
- 
+
+VIDEO_PATH = ".//Documents//GitHub//EdControl//Videos"
 
 def main():
 
@@ -43,8 +45,11 @@ def main():
         if st.session_state.sidebars == 0:
             column2.header("EdControl")
         elif st.session_state.sidebars == 1:
-            video_analyse.view_side_bar("Преподаватель 1", column2)
-
+            if not os.path.exists(VIDEO_PATH):
+                os.mkdir(VIDEO_PATH)
+                video_analyse.view_side_bar("Преподаватель 1", column2, VIDEO_PATH)
+            else:
+                video_analyse.view_side_bar("Преподаватель 1", column2, VIDEO_PATH)
 
 if __name__ == "__main__":
     main()
