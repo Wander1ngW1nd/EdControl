@@ -16,6 +16,7 @@ attrs = "^23.1.0"
 plotly = "5.16.1"
 pandas = "2.1.0"
 tqdm = "^4.66.1"
+streamlit = "^1.26.0"
 
 [tool.poetry.group.linters.dependencies]
 black = "^23.7.0"
