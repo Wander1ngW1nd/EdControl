@@ -17,6 +17,17 @@ VIDEO_PATH = "C:\\Users\\ПК\\Videos"
 EMOTIONS_RU = {"angry":"Злость", "disgust":"Отвращение", "fear":"Страх",
             "happy":"Счастье", "sad":"Грусть", "surprise":"Удивление"}
 
+def seconds_to_time(seconds):
+    
+    seconds = seconds % (24 * 3600)
+    hour = seconds // 3600
+    seconds %= 3600
+    minutes = seconds // 60
+    seconds %= 60
+    time = "%d:%02d:%02d" % (hour, minutes, seconds) 
+     
+    return time
+
 def count_video_length(path, name):
     
     path_to_video = os.path.join(path, name)
