@@ -6,6 +6,7 @@ Created on Wed Sep  6 16:12:00 2023
 """
 
 import plotly.express as px
+import pandas as pd
 
 def radio_chart():
     
