@@ -25,6 +25,11 @@ Currently implemented:
 
 ## Внешний вид сервиса
 Внешний вид сервиса интуитивно понятен для пользователей и его главная страница выглядит так:
+
+The appearance of the service is intuitive for users and its main page looks like this:
 <p align="center"><img src="/img/3.png" width=90% alt="Main page"></p>
+
 После успешной обработки загруженного видео вы можете получить аналитику и рекомендации:
+
+After successfully processing the uploaded video, you can get analytics and recommendations:
 <p align="center"><img src="/img/1.png" width=90% alt="Main page"></p>
