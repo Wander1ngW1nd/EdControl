@@ -37,12 +37,18 @@ After successfully processing the uploaded video, you can get analytics and reco
 ## Road Map
 На данный момент продукт находится в рабочем состоянии и готов к использованию. Наша команда EdControl видит перспективы и дальнейший путь развития продукта, добавление новых функций и расширение целевой аудитории.
 
-- Добавление распознавания речи и интонации для повышения точности распознования эмоционального состояния
-- Добавление распознования жестов
-- Добавление распознования эмоционального состояния в групповых звонках и конференциях
+- Вырезание окна с обучающимся
+- Добавление распознавания речи (текст) и интонации (аудио) для повышения точности определения эмоционального состояния
+- Добавление распознования бан слов и жестов
+- Добавление функции идентификации по лицу
+- Добавление возможности распознования эмоционального состояния в групповых звонках и конференциях
+- Интеграция в LMS системы различных платформ
 
 At the moment, the product is in working condition and ready for use. Our EdControl team sees prospects and the further path of product development, the addition of new features and the expansion of the target audience.
 
-- Adding speech recognition and intonation to improve the accuracy of emotional state recognition
-- Adding gesture recognition
-- Adding emotional state recognition in group calls and conferences
+- Cutting out a window with students
+- Adding speech recognition (text) and intonation (audio) to improve the accuracy of determining the emotional state
+- Adding recognition of ban words and gestures
+- Adding face identification function
+- Adding the ability to recognize the emotional state in group calls and conferences
+- Integration into LMS systems of various platforms
