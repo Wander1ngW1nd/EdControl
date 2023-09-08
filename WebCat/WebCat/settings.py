@@ -135,9 +135,12 @@ USE_L10N = True
 
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+PATH_TO_YOUR_STATIC_FOLDER = "/WebCat/static/"
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
+    "./WebCat/static/",
 ]
+
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 

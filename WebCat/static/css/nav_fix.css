@@ -1,0 +1,41 @@
+#side_nav {
+    min-width: 250px;
+    max-width: 250px;
+    transition: all 0.3s;
+}
+
+.content {
+    min-height: 100vh;
+    width: 100%;
+}
+
+hr.h-color {
+    background: #eee;
+}
+
+.sidebar li.active {
+    background: #00ccf2;
+    border-radius: 8px;
+}
+
+.sidebar li.active a,
+.sidebar li.active a:hover {
+    color: #000;
+}
+
+.sidebar li a {
+    color: #fff;
+}
+
+@media(max-width: 1920px) {
+    #side_nav {
+        margin-left: -250px;
+        position: fixed;
+        min-height: 100vh;
+        z-index: 1;
+    }
+}
+
+#side_nav.active {
+    margin-left: 0;
+}

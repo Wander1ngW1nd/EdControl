@@ -4,7 +4,9 @@
 $custom-theme-colors: (
     "altblack": #181d23,
     "altgray-dark": #29313a,
-    "altgray": #455060
+    "altgray": #455060,
+    "altprimary": #00ccf2,
+    "altdanger": #ff007c
 );
 
 $theme-colors: map-merge($custom-theme-colors, $theme-colors);
