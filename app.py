@@ -11,7 +11,7 @@ import os
 from sidebars import video_analyse
 
 
-VIDEO_PATH = ".//Documents//GitHub//EdControl//Videos"
+VIDEO_PATH = "videos"
 
 def main():
 
