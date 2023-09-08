@@ -5,9 +5,9 @@ Created on Tue Sep  5 23:45:21 2023
 @author: M
 """
 import cv2
+import emrec_model as EM
 import glob
 import streamlit as st
-import time
 import os
 
 from plotlycharts import charts
@@ -22,6 +22,7 @@ EMOTIONS_RU = {"angry":"Злость", "disgust":"Отвращение", "fear":
             "happy":"Счастье", "sad":"Грусть", "surprise":"Удивление"}
 
 def draw_readme(column):
+    print(os.listdir("."))
     with open(README_FILE_PATH, 'r') as f:
         readme_line = f.readlines()
         buffer = []
@@ -68,7 +69,7 @@ def default_expanders(teacher):
         st.write("...")
 
 #функция для отображения экспандеров после загрузки видео, аргументы-колонка и видеофайл
-def add_expander(teacher, video, path):
+def add_expander(teacher, video, path, data):
 
 
     with teacher.expander(":green[загруженное видео]"):
@@ -82,30 +83,26 @@ def add_expander(teacher, video, path):
         info.video(video_bytes)
 
         timeStamps.text("Вреременные отметки ⬇")
-        #data = метод_модели()
         
-        data = [{"время": "5:10", "Эмоция":"Удивление"},
+        
+        
+        stampData = [{"время": "5:10", "Эмоция":"Удивление"},
                 {"время": "8:09", "Эмоция":"Грусть"},
                 {"время": "11:14", "Эмоция":"Счастье"}]
         
-        timeStamps.data_editor(data, disabled = True)
+        timeStamps.data_editor(stampData, disabled = True)
 
         
         #selectbox выбора типа графика
-        option = info.selectbox(
-            'Диаграммы:',
-                ('Полярная', 'Столбчатая'))
+        
 
-        if option == 'Полярная':
-            radio = charts.radio_chart()
-            info.plotly_chart(radio, use_container_width=True)
-            st.write("...")
-        elif option == 'Столбчатая':
-            bar = charts.bar_chart()
-            info.plotly_chart(bar, use_container_width=True)
-            st.write("...")
-
-
+       
+        radio = charts.radio_chart(data)
+        info.plotly_chart(radio, use_container_width=True)
+       
+        bar = charts.bar_chart(data)
+        info.plotly_chart(bar, use_container_width=True)
+      
 
     with teacher.expander(":red[ФИО_дата_время1.mp4]"):
         st.write("...")
@@ -139,15 +136,20 @@ def view_side_bar(name, teacher, path):
         with open(os.path.join(path, videoFile.name),"wb") as f:
             f.write(videoFile.getbuffer())
         videoLength = count_video_length(path, videoFile.name)
-        if videoLength <=17 and videoLength >= 0.01:
+        if videoLength <=5 and videoLength >= 0.01:
             with teacher.status("Обработка"):
-                time.sleep(3)
+                model = EM.VideoEmotionRecognizer(os.path.join(path, videoFile.name))
+                outputSummary = model.emotions_summary()
+                
+                ruData = {}
+                for key, value in outputSummary.items():
+                    ruData[EMOTIONS_RU[key]] = value
                 
             teacher.header("Выбор видео")
-            add_expander(teacher, videoFile, path)
+            add_expander(teacher, videoFile, path, ruData)
         else:
             teacher.error("Длинное видео")
-            teacher.header("Выбор видео")
+            teacher.header("Выбор урока")
             default_expanders(teacher)
     #иначе отрисовываем дефолтное кол-во экспандеров
     else:
