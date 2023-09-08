@@ -15,8 +15,8 @@ from plotlycharts import charts
 
 #VIDEO_PATH = "C:\\Users\\ПК\\Videos"
 
-README_IMG_FOLDER = ".//Documents//GitHub//EdControl//img"
-README_FILE_PATH = './/Documents//GitHub//EdControl//Readme_for_main_page.txt'
+README_IMG_FOLDER = "img"
+README_FILE_PATH = "Readme_for_main_page.txt"
 
 EMOTIONS_RU = {"angry":"Злость", "disgust":"Отвращение", "fear":"Страх",
             "happy":"Счастье", "sad":"Грусть", "surprise":"Удивление"}
@@ -31,7 +31,7 @@ def draw_readme(column):
         for imgFolder in resourses:
             if imgFolder in line:
                 column.markdown(''.join(buffer[:-1])) 
-                column.image(README_IMG_FOLDER + f'//{imgFolder}', use_column_width = True)
+                column.image(os.path.join(README_IMG_FOLDER, imgFolder), use_column_width = True)
                 buffer.clear()
     column.markdown(''.join(buffer))
 
@@ -76,7 +76,7 @@ def add_expander(teacher, video, path):
         info, timeStamps = st.columns([4, 6])
 
    #video read
-        video_file = open(path +"\\"+ video.name, 'rb')
+        video_file = open(os.path.join(path, video.name), 'rb')
         video_bytes = video_file.read()
         #info.write("videoplayer")
         info.video(video_bytes)
