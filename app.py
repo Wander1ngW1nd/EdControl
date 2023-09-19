@@ -14,7 +14,6 @@ from sidebars import video_analyse
 VIDEO_PATH = "videos"
 
 def main():
-
     st.set_page_config(
         page_title="EdConrol",
         page_icon="👁‍🗨",
