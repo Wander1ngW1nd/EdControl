@@ -150,10 +150,7 @@ def view_side_bar(name, teacher, path):
                 model = dz(os.path.join(path, videoFile.name))
                 url = 'capspeaker.html'
                 webbrowser.open(url, new=2)  # open in new tab
-                
-                ruData = {}
-                for key, value in outputSummary.items():
-                    ruData[EMOTIONS_RU[key]] = value
+            
             teacher.header("Выбор видео")
             add_expander(teacher, videoFile, path, ruData)
 
