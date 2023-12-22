@@ -114,7 +114,7 @@ for g in groups:
         boxclr = def_boxclr
         spkrclr = def_spkrclr
         if speaker in speakers:
-        speaker, boxclr, spkrclr = speakers[speaker] 
+            speaker, boxclr, spkrclr = speakers[speaker] 
         
         html.append(f'<div class="e" style="background-color: {boxclr}">\n');
         html.append('<p  style="margin:0;padding: 5px 10px 10px 10px;word-wrap:normal;white-space:normal;">\n')
