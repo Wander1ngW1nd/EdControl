@@ -9,6 +9,8 @@ import emrec_model as EM
 import glob
 import streamlit as st
 import os
+import diarization as dz
+import webbrowser
 
 from plotlycharts import charts
 
@@ -130,8 +132,7 @@ def view_side_bar(name, teacher, path):
     
     #если видео загружено, сохраняем и отрисовываем больше экспандеров
     if videoFile is not None:
-        
-
+    
         #скачивание файла в дирректорию
         with open(os.path.join(path, videoFile.name),"wb") as f:
             f.write(videoFile.getbuffer())
@@ -144,9 +145,18 @@ def view_side_bar(name, teacher, path):
                 ruData = {}
                 for key, value in outputSummary.items():
                     ruData[EMOTIONS_RU[key]] = value
+# Вот тут искать момент с передачей видео в speech2text            
+            with teacher.status("Обработка"):
+                model = dz(os.path.join(path, videoFile.name))
+                url = 'capspeaker.html'
+                webbrowser.open(url, new=2)  # open in new tab
                 
+                ruData = {}
+                for key, value in outputSummary.items():
+                    ruData[EMOTIONS_RU[key]] = value
             teacher.header("Выбор видео")
             add_expander(teacher, videoFile, path, ruData)
+
         else:
             teacher.error("Длинное видео")
             teacher.header("Выбор урока")

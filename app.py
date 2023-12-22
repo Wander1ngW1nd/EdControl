@@ -36,7 +36,7 @@ def main():
 
         analyse = st.button("Преподаватель 1")
 
-        #уловия по нажатию на кнопки
+        #условия по нажатию на кнопки
         if home:
             st.session_state.sidebars = 0
         elif analyse:
