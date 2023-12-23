@@ -5,12 +5,11 @@ import torch
 import re
 import whisper
 import json
-import subprocess
+from audio_extract import extract_audio
 
 # videoFile - переменная берется из video_analyse.py далее превращается в audio.wav и далее работа идет с этим файлом
 
-command = "ffmpeg -i videoFile -ab 160k -ac 2 -ar 44100 -vn audio.wav"
-subprocess.call(command, shell=True)
+extract_audio(input_path=videoFile, output_path="./audio.wav", output_format='wav')
 
 spacermilli = 2000
 spacer = AudioSegment.silent(duration=spacermilli)
