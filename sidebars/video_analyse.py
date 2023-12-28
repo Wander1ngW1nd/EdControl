@@ -11,8 +11,8 @@ import streamlit as st
 import os
 import diarization as dz
 import webbrowser
-
 from plotlycharts import charts
+import streamlit.components.v1 as components
 
 
 #VIDEO_PATH = "C:\\Users\\ПК\\Videos"
@@ -138,21 +138,24 @@ def view_side_bar(name, teacher, path):
             f.write(videoFile.getbuffer())
         videoLength = count_video_length(path, videoFile.name)
         if videoLength <=3 and videoLength >= 0.01:
-            with teacher.status("Обработка"):
-                model = EM.VideoEmotionRecognizer(os.path.join(path, videoFile.name))
-                outputSummary = model.emotions_summary()
+            # with teacher.status("Обработка"):
+            #     model = EM.VideoEmotionRecognizer(os.path.join(path, videoFile.name))
+            #     outputSummary = model.emotions_summary()
                 
-                ruData = {}
-                for key, value in outputSummary.items():
-                    ruData[EMOTIONS_RU[key]] = value
-# Вот тут искать момент с передачей видео в speech2text            
-            with teacher.status("Обработка"):
-                model = dz(os.path.join(path, videoFile.name))
-                url = 'capspeaker.html'
-                webbrowser.open(url, new=2)  # open in new tab
+            #     ruData = {}
+            #     for key, value in outputSummary.items():
+            #         ruData[EMOTIONS_RU[key]] = value
+
             
-            teacher.header("Выбор видео")
-            add_expander(teacher, videoFile, path, ruData)
+            # teacher.header("Выбор видео")
+            # add_expander(teacher, videoFile, path, ruData)
+            # Вот тут искать момент с передачей видео в speech2text            
+            with teacher.status("Обработка"):
+                dz.path_for_audio(path,videoFile.name)
+                audio = './audio.wav'
+                dz.dz_result(audio)
+                components.html('capspeaker.html', width=200, height=200)
+
 
         else:
             teacher.error("Длинное видео")
