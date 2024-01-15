@@ -156,8 +156,6 @@ def view_side_bar(name, teacher, path):
                 dz.dz_result(audio)
                 with open('transcript.txt') as input:
                     st.text(input.read())
-                # title = st.text_input('Результат обработки', 'Текст видеоурока')
-                # st.write(open('transcript.txt'))
 
 
         else:
