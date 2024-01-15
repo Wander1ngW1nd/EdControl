@@ -154,7 +154,10 @@ def view_side_bar(name, teacher, path):
                 dz.path_for_audio(path,videoFile.name)
                 audio = './audio.wav'
                 dz.dz_result(audio)
-                components.html('capspeaker.html', width=200, height=200)
+                with open('transcript.txt') as input:
+                    st.text(input.read())
+                # title = st.text_input('Результат обработки', 'Текст видеоурока')
+                # st.write(open('transcript.txt'))
 
 
         else:
