@@ -84,7 +84,7 @@ def add_expander(teacher, video, path, data):
         #info.write("videoplayer")
         info.video(video_bytes)
 
-        timeStamps.text("Вреременные отметки ⬇")
+        timeStamps.text("Временные отметки ⬇")
         
         
         
@@ -145,8 +145,8 @@ def view_side_bar(name, teacher, path):
                         ruData[EMOTIONS_RU[key]] = value
 
                 
-                # teacher.header("Выбор видео")
-                # add_expander(teacher, videoFile_em, path, ruData)
+                teacher.header("Выбор видео")
+                add_expander(teacher, videoFile_em, path, ruData)
 
             else:
                 teacher.error("Длинное видео")
