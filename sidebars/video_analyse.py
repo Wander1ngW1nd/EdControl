@@ -129,58 +129,32 @@ def view_side_bar(name, teacher, path):
     videoFile_em = teacher.file_uploader("Загрузить видео для обработки эмоций", type='mp4',\
                                       accept_multiple_files=False)
     
-    videoFile_dz = teacher.file_uploader("Загрузить видео для перевода в текст", type='mp4',\
-                                      accept_multiple_files=False)
-    
-    
-    
-    #если видео загружено, сохраняем и отрисовываем больше экспандеров
-    if videoFile_dz is not None:
-    
-        #скачивание файла в дирректорию
-        with open(os.path.join(path, videoFile_dz.name),"wb") as f:
-            f.write(videoFile_dz.getbuffer())
-        videoLength = count_video_length(path, videoFile_dz.name)
-        if videoLength <=3 and videoLength >= 0.01:
-            with teacher.status("Обработка"):
-                dz.path_for_audio(path,videoFile_dz.name)
-                audio = './audio.wav'
-                dz.dz_result(audio)
-                with open('transcript.txt') as input:
-                    st.text(input.read())
-
-        # else:
-        #     teacher.error("Длинное видео")
-        #     teacher.header("Выбор урока")
-        #     default_expanders(teacher)
-    #иначе отрисовываем дефолтное кол-во экспандеров
-
-    # elif videoFile_em is not None:
+    if videoFile_em is not None:
         
-    #         #скачивание файла в дирректорию
-    #         with open(os.path.join(path, videoFile_em.name),"wb") as f:
-    #             f.write(videoFile_em.getbuffer())
-    #         videoLength = count_video_length(path, videoFile_em.name)
-    #         if videoLength <=3 and videoLength >= 0.01:
-    #             with teacher.status("Обработка"):
-    #                 model = EM.VideoEmotionRecognizer(os.path.join(path, videoFile_em.name))
-    #                 outputSummary = model.emotions_summary()
+            #скачивание файла в дирректорию
+            with open(os.path.join(path, videoFile_em.name),"wb") as f:
+                f.write(videoFile_em.getbuffer())
+            videoLength = count_video_length(path, videoFile_em.name)
+            if videoLength <=3 and videoLength >= 0.01:
+                with teacher.status("Обработка"):
+                    model = EM.VideoEmotionRecognizer(os.path.join(path, videoFile_em.name))
+                    outputSummary = model.emotions_summary()
                     
-    #                 ruData = {}
-    #                 for key, value in outputSummary.items():
-    #                     ruData[EMOTIONS_RU[key]] = value
+                    ruData = {}
+                    for key, value in outputSummary.items():
+                        ruData[EMOTIONS_RU[key]] = value
 
                 
-    #             # teacher.header("Выбор видео")
-    #             # add_expander(teacher, videoFile_em, path, ruData)
+                # teacher.header("Выбор видео")
+                # add_expander(teacher, videoFile_em, path, ruData)
 
-    #         else:
-    #             teacher.error("Длинное видео")
-    #             teacher.header("Выбор урока")
-    #             default_expanders(teacher)
-    #         #иначе отрисовываем дефолтное кол-во экспандеров
-    # else:
+            else:
+                teacher.error("Длинное видео")
+                teacher.header("Выбор урока")
+                default_expanders(teacher)
+            #иначе отрисовываем дефолтное кол-во экспандеров
+    else:
 
-    #     teacher.header("Выбор видео")
+        teacher.header("Выбор видео")
 
-    #     default_expanders(teacher)
+        default_expanders(teacher)
