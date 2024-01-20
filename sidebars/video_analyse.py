@@ -9,8 +9,10 @@ import emrec_model as EM
 import glob
 import streamlit as st
 import os
-
+import diarization as dz
+import webbrowser
 from plotlycharts import charts
+import streamlit.components.v1 as components
 
 
 #VIDEO_PATH = "C:\\Users\\ПК\\Videos"
@@ -82,7 +84,7 @@ def add_expander(teacher, video, path, data):
         #info.write("videoplayer")
         info.video(video_bytes)
 
-        timeStamps.text("Вреременные отметки ⬇")
+        timeStamps.text("Временные отметки ⬇")
         
         
         
@@ -124,36 +126,35 @@ def view_side_bar(name, teacher, path):
     info.text("email, phone")
 
     #upload файла
-    videoFile = teacher.file_uploader("Загрузить видео", type='mp4',\
+    videoFile_em = teacher.file_uploader("Загрузить видео для обработки эмоций", type='mp4',\
                                       accept_multiple_files=False)
     
-    
-    #если видео загружено, сохраняем и отрисовываем больше экспандеров
-    if videoFile is not None:
+    if videoFile_em is not None:
         
+            #скачивание файла в дирректорию
+            with open(os.path.join(path, videoFile_em.name),"wb") as f:
+                f.write(videoFile_em.getbuffer())
+            videoLength = count_video_length(path, videoFile_em.name)
+            if videoLength <=3 and videoLength >= 0.01:
+                with teacher.status("Обработка"):
+                    model = EM.VideoEmotionRecognizer(os.path.join(path, videoFile_em.name))
+                    outputSummary = model.emotions_summary()
+                    
+                    ruData = {}
+                    for key, value in outputSummary.items():
+                        ruData[EMOTIONS_RU[key]] = value
 
-        #скачивание файла в дирректорию
-        with open(os.path.join(path, videoFile.name),"wb") as f:
-            f.write(videoFile.getbuffer())
-        videoLength = count_video_length(path, videoFile.name)
-        if videoLength <=3 and videoLength >= 0.01:
-            with teacher.status("Обработка"):
-                model = EM.VideoEmotionRecognizer(os.path.join(path, videoFile.name))
-                outputSummary = model.emotions_summary()
                 
-                ruData = {}
-                for key, value in outputSummary.items():
-                    ruData[EMOTIONS_RU[key]] = value
-                
-            teacher.header("Выбор видео")
-            add_expander(teacher, videoFile, path, ruData)
-        else:
-            teacher.error("Длинное видео")
-            teacher.header("Выбор урока")
-            default_expanders(teacher)
-    #иначе отрисовываем дефолтное кол-во экспандеров
+                teacher.header("Выбор видео")
+                add_expander(teacher, videoFile_em, path, ruData)
+
+            else:
+                teacher.error("Длинное видео")
+                teacher.header("Выбор урока")
+                default_expanders(teacher)
+            #иначе отрисовываем дефолтное кол-во экспандеров
     else:
-        
+
         teacher.header("Выбор видео")
 
         default_expanders(teacher)

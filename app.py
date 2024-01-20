@@ -9,6 +9,7 @@ import streamlit as st
 import os
 
 from sidebars import video_analyse
+from sidebars import audio_analyse
 
 
 VIDEO_PATH = "videos"
@@ -34,13 +35,19 @@ def main():
         home = st.button("🏠")
         st.title("Преподаватели")
 
-        analyse = st.button("Преподаватель 1")
+        analyse_emotion = st.button("Анализ эмоций")
+        analyse_audio = st.button("Перевод в текст")
 
-        #уловия по нажатию на кнопки
+        
+        
+
+        #условия по нажатию на кнопки
         if home:
             st.session_state.sidebars = 0
-        elif analyse:
+        elif analyse_emotion:
             st.session_state.sidebars = 1
+        elif analyse_audio:
+            st.session_state.sidebars = 2
 
         if st.session_state.sidebars == 0:
             #column2.header("EdControl") 
@@ -51,6 +58,11 @@ def main():
                 video_analyse.view_side_bar("Преподаватель 1", column2, VIDEO_PATH)
             else:
                 video_analyse.view_side_bar("Преподаватель 1", column2, VIDEO_PATH)
-
+        elif st.session_state.sidebars == 2:
+            if not os.path.exists(VIDEO_PATH):
+                os.mkdir(VIDEO_PATH)
+                audio_analyse.view_side_bar("Преподаватель 1", column2, VIDEO_PATH)
+            else:
+                audio_analyse.view_side_bar("Преподаватель 1", column2, VIDEO_PATH)
 if __name__ == "__main__":
     main()
